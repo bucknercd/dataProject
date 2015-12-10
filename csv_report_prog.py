@@ -5,7 +5,7 @@ def create_acct_keys(file_, acct_list):
     try:
         f = open(file_, 'r')
         csv_obj = csv.reader(f)
-    except:
+    except IOError as e:
         print '***** error: File '+file_+' not found. *****'
         state = 1
     if state == 0:
