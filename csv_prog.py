@@ -1,49 +1,69 @@
-''' CSV PROGRAM'''
+
 import csv, time
 
-rpt1 = 'RptCareTCDetailNathanBonnet.csv'
-rpt2 = 'RptCareTCDetailDanielKinney.csv'
+rpt_list = []
+fcr_list = []
 
-fcr1 = 'FCRALLDetailReportNathanBonnet.csv'
-fcr2 = 'FCRALLDetailReortMarissaLopez.csv'
+rpt_list.append('RptCareTCDetailNathanBonnet.csv')
+rpt_list.append('RptCareTCDetailDanielKinney.csv')
 
-f1 = open(rpt1, 'r')
-csv_obj1 = csv.reader(f1)
+fcr_list.append('FCRALLDetailReportNathanBonnet.csv')
+fcr_list.append('FCRALLDetailReportMarissaLopez.csv')
 
 accts = []
 
-for row in csv_obj1:
+def create_acct_keys(file_, acct_list):
+   state = 0
    try:
-      accts.append(row[10])
+      f = open(file_, 'r')
+      csv_obj = csv.reader(f)
    except:
-      print 'end of csv file'
-f1.close()
-accts.pop(0)
+      print '***** error: File '+file_+' not found. *****'
+      state = 1
+   if state == 0:
+      for row in csv_obj:
+         try:
+            acct_list.append(row[10])
+         except:
+            pass
+      f.close()
+      acct_list.pop(0)
+   else:
+      pass
 
-f2 = open('test.txt', 'w')
-for i in accts:
-   f2.write(i)
-f2.close()
-
-report = open('report.txt', 'a')
-
-f2 = open(fcr2, 'r')
-csv_obj2 = csv.reader(f2)
-dic = {}
-
-'''for row in csv_obj2:
+def create_report(file_, acct_list):
+   state = 0
+   report = open('report.txt', 'a')
    try:
-      acct = row[7]
-      name = row[3]
-      dic[acct] = name
+      f = open(file_, 'r')
+      csv_obj = csv.reader(f)
    except:
-      print 'end of 2nd csv file'
-      time.sleep(20)
+      print '***** error: File '+file_+' not found. *****'
+      state = 1
+   if state == 0:   
+      dic = {}
 
+      for row in csv_obj:
+         try:
+            acct = row[7]
+            name = row[3]
+            dic[acct] = name
+         except:
+            print 'end of 2nd csv file'
+      for i in accts:
+         try:
+            info = dic[i]+'\t\t'+i+'\n'
+            report.write(info)
+         except:
+            pass
+         report.close()
+         f.close()
+      else:
+         pass
 
-for i in accts:
-   info = dic[i]+'\t\t'+i'\n'
-   report.write(info)'''
-   
+for item in rpt_list:
+   create_acct_keys(item, accts) 
+for item in fcr_list:
+   create_report(item, accts)  
 
 
