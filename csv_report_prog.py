@@ -1,23 +1,12 @@
 import csv, os
 
 def create_acct_keys(file_, acct_list):
-    state = 0
-    try:
-        f = open(file_, 'r')
-        csv_obj = csv.reader(f)
-    except IOError as e:
-        print '***** error: File '+file_+' not found. *****'
-        state = 1
-    if state == 0:
-        for row in csv_obj:
-            try:
-                acct_list.append(row[10])
-            except:
-                pass
-        f.close()
-        acct_list.pop(0)
-    else:
-        pass
+    f = open(file_, 'r')
+    csv_obj = csv.reader(f)
+    for row in csv_obj:
+        acct_list.append(row[10])
+    f.close()
+    acct_list.pop(0)
 
 def write_header(target_file):
     headers = ['ACCOUNT NUMBER','AGENT NAME','ORIGINAL UCID','SUPERVISOR NAME']
@@ -76,8 +65,12 @@ for item in files:
         rpt_list.append(item)
 
 for file_ in rpt_list:
-    create_acct_keys(file_, accts) 
-
+    try:
+        create_acct_keys(file_, accts) 
+    except IOError as e:
+    	print '***** error: File '+file_+' not found. *****'
+    except IndexError as e:
+    	print e
 write_header('report.csv')
 for file_ in fcr_list:
     create_report(file_, accts)
