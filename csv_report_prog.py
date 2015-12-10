@@ -16,17 +16,10 @@ def write_header(target_file):
     f.close()
 
 def create_report(file_, acct_list):
-    state = 0
     report = open('report.csv', 'ab')
     writer = csv.writer(report,quoting=csv.QUOTE_MINIMAL)
-    try:
-        f = open(file_, 'rb')
-        csv_obj = csv.reader(f)
-    except:
-        print '***** error: File '+file_+' not found. *****'
-        state = 1
-    if state == 0:
-
+    f = open(file_, 'rb')
+    csv_obj = csv.reader(f)
     for row in csv_obj:
         list_ = []
         acct = row[7]
@@ -48,22 +41,19 @@ def create_report(file_, acct_list):
 	    list_.append(sup_name)
 	    print list_
             writer.writerow(list_)
-
     f.close()
     report.close()
 
-
+if __name__ = '__main__':
 accts = []
 rpt_list = []
 fcr_list = []
 root, folders, files = os.walk('.').next()
-
 for item in files:
     if item.startswith('FCRALLDetailReport'):
         fcr_list.append(item)
     elif item.startswith('RptCareTCDetail'):
         rpt_list.append(item)
-
 for file_ in rpt_list:
     try:
         create_acct_keys(file_, accts) 
@@ -73,7 +63,9 @@ for file_ in rpt_list:
     	print e
 write_header('report.csv')
 for file_ in fcr_list:
-    create_report(file_, accts)
-
-
-
+    try:
+        create_report(file_, accts)
+    except IOError as e:
+    	print '***** error: File '+file_+' not found. *****'
+    except IOError as e:
+    	print e
