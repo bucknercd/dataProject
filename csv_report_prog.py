@@ -44,7 +44,7 @@ def create_report(file_, acct_list):
     f.close()
     report.close()
 
-if __name__ = '__main__':
+if __name__ == '__main__':
 accts = []
 rpt_list = []
 fcr_list = []
