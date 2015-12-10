@@ -45,27 +45,27 @@ def create_report(file_, acct_list):
     report.close()
 
 if __name__ == '__main__':
-accts = []
-rpt_list = []
-fcr_list = []
-root, folders, files = os.walk('.').next()
-for item in files:
-    if item.startswith('FCRALLDetailReport'):
-        fcr_list.append(item)
-    elif item.startswith('RptCareTCDetail'):
-        rpt_list.append(item)
-for file_ in rpt_list:
-    try:
-        create_acct_keys(file_, accts) 
-    except IOError as e:
-    	print '***** error: File '+file_+' not found. *****'
-    except IndexError as e:
-    	print e
-write_header('report.csv')
-for file_ in fcr_list:
-    try:
-        create_report(file_, accts)
-    except IOError as e:
-    	print '***** error: File '+file_+' not found. *****'
-    except IOError as e:
-    	print e
+    accts = []
+    rpt_list = []
+    fcr_list = []
+    root, folders, files = os.walk('.').next()
+    for item in files:
+        if item.startswith('FCRALLDetailReport'):
+            fcr_list.append(item)
+        elif item.startswith('RptCareTCDetail'):
+            rpt_list.append(item)
+    for file_ in rpt_list:
+        try:
+            create_acct_keys(file_, accts) 
+        except IOError as e:
+    	    print '***** error: File '+file_+' not found. *****'
+        except IndexError as e:
+    	    print e
+    write_header('report.csv')
+    for file_ in fcr_list:
+        try:
+            create_report(file_, accts)
+        except IOError as e:
+    	    print '***** error: File '+file_+' not found. *****'
+        except IOError as e:
+    	    print e
