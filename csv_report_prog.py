@@ -28,7 +28,7 @@ def create_report(file_, acct_list):
         if acct in acct_list:
 	    list_.append(acct)
 	    name = row[3]
-	    name = name[0:-1]
+	    name = name[0:-2]
 	    list_.append(name)
 	    UCID = row[26]
 	    if len(UCID) != 20:
@@ -37,7 +37,7 @@ def create_report(file_, acct_list):
 	        UCID = '*'+UCID
 	    list_.append(UCID)
 	    sup_name = row[1]
-	    sup_name = sup_name[0:-1]
+	    sup_name = sup_name[0:-2]
 	    list_.append(sup_name)
 	    print list_
             writer.writerow(list_)
