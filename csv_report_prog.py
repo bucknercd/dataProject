@@ -8,9 +8,9 @@ def create_acct_keys(file_, acct_list):
     f.close()
     acct_list.pop(0)
 
-def write_header(target_file):
+def write_header(out_file):
     headers = ['ACCOUNT NUMBER','AGENT NAME','ORIGINAL UCID','SUPERVISOR NAME']
-    f = open(target_file,'a')
+    f = open(out_file,'a')
     writer = csv.writer(f,quoting=csv.QUOTE_MINIMAL)
     writer.writerow(headers)
     f.close()
@@ -28,7 +28,7 @@ def create_report(file_, acct_list):
         if acct in acct_list:
 	    list_.append(acct)
 	    name = row[3]
-	    name = name[0:-1]
+	    name = name[0:-2]
 	    list_.append(name)
 	    UCID = row[26]
 	    if len(UCID) != 20:
@@ -37,7 +37,7 @@ def create_report(file_, acct_list):
 	        UCID = '*'+UCID
 	    list_.append(UCID)
 	    sup_name = row[1]
-	    sup_name = sup_name[0:-1]
+	    sup_name = sup_name[0:-2]
 	    list_.append(sup_name)
 	    print list_
             writer.writerow(list_)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             rpt_list.append(item)
     for file_ in rpt_list:
         try:
-            create_acct_keys(file_, accts) 
+            create_acct_keys(file_, accts)
         except IOError as e:
     	    print '***** error: File '+file_+' not found. *****'
         except IndexError as e:
