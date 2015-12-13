@@ -67,5 +67,5 @@ if __name__ == '__main__':
             create_report(file_, accts)
         except IOError as e:
     	    print '***** error: File '+file_+' not found. *****'
-        except IOError as e:
+        except IndexError as e:    
     	    print e
