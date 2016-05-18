@@ -1,3 +1,5 @@
+!#/usr/bin/python
+
 import csv, os
 
 def create_acct_keys(file_, acct_list):
